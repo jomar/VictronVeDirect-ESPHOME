@@ -1,6 +1,6 @@
 substitutions:
   name: victron-smartshunt
-  external_components_source: github://KinDR007/VictronMPPT-ESPHOME@main
+  external_components_source: github://jomar/VictronVeDirect-ESPHOME@main
 
 esphome:
   name: ${name}
@@ -39,6 +39,7 @@ victron:
   uart_id: uart0
   id: victron0
   throttle: 10s
+  verify_checksum: true
 
 sensor:
   - platform: victron

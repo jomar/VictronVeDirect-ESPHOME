@@ -11,6 +11,8 @@ CODEOWNERS = ["@KinDR007"]
 
 MULTI_CONF = True
 
+CONF_VERIFY_CHECKSUM = 'verify_checksum'
+
 victron_ns = cg.esphome_ns.namespace("victron")
 VictronComponent = victron_ns.class_("VictronComponent", uart.UARTDevice, cg.Component)
 
@@ -20,6 +22,7 @@ CONFIG_SCHEMA = uart.UART_DEVICE_SCHEMA.extend(
     {
         cv.GenerateID(): cv.declare_id(VictronComponent),
         cv.Optional(CONF_THROTTLE, default="1s"): cv.positive_time_period_milliseconds,
+        cv.Optional(CONF_VERIFY_CHECKSUM, default=True): cv.boolean,
     }
 )
 
@@ -30,3 +33,4 @@ def to_code(config):
     yield uart.register_uart_device(var, config)
 
     cg.add(var.set_throttle(config[CONF_THROTTLE]))
+    cg.add(var.set_verify_checksum(config[CONF_VERIFY_CHECKSUM]))
