@@ -142,10 +142,7 @@ void VictronComponent::loop() {
           }
           else {
             ESP_LOGW(TAG, "Checksum verification failed: '%i', skip publish", checksum_);
-            ESP_LOGW(TAG, "DEBUG -----------------");
-            publish_values();
             ESP_LOGW(TAG, "Raw value:\n %s", raw_.c_str());
-            ESP_LOGW(TAG, "END DEBUG--------------");
           }
           values_.clear();
           raw_.clear();

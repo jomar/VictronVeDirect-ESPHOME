@@ -1,6 +1,6 @@
 substitutions:
   name: victron-mppt
-  external_components_source: github://KinDR007/VictronMPPT-ESPHOME@main
+  external_components_source: github://jomar/VictronVeDirect-ESPHOME@main
 
 esphome:
   name: ${name}
@@ -27,6 +27,7 @@ mqtt:
   username: !secret mqtt_username
   password: !secret mqtt_password
   id: mqtt_client
+  discovery: false
 
 uart:
   id: uart0
@@ -39,6 +40,7 @@ victron:
   uart_id: uart0
   id: victron0
   throttle: 10s
+  verify_checksum: true
 
 sensor:
   - platform: victron
@@ -58,7 +60,7 @@ sensor:
     panel_power:
       name: "${name} panel power"
     battery_current:
-      name: "${name} panel current"
+      name: "${name} battery current"
     battery_voltage:
       name: "${name} battery voltage"
     day_number:
