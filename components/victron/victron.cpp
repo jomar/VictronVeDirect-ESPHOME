@@ -103,11 +103,16 @@ void VictronComponent::loop() {
   while (available()) {
     uint8_t c;
     read_byte(&c);
-    checksum_ = (checksum_ + c) & 255;
+    if (!(state_ == 0 && c == ':') && state_ != 3)
+    {
+      checksum_ = (checksum_ + c) & 255;
+      raw_.push_back(c);
+    }
     if (state_ == 0) {
       if (c == '\r' || c == '\n') {
         continue;
       }
+      // end of line
       label_.clear();
       value_.clear();
       state_ = 1;
@@ -130,14 +135,20 @@ void VictronComponent::loop() {
         state_ = 0;
         // The checksum is used as end of frame indicator
         if (now - this->last_publish_ >= this->throttle_) {
-          this->last_publish_ = now;
           if (!verify_checksum_ || checksum_ == 0) {
+            this->last_publish_ = now;
             ESP_LOGW(TAG, "Publishing %i value(s). Checksum valid: %s ", values_.size(), checksum_ == 0 ? "YES" : "NO");
             publish_values();
           }
-          else
+          else {
             ESP_LOGW(TAG, "Checksum verification failed: '%i', skip publish", checksum_);
+            ESP_LOGW(TAG, "DEBUG -----------------");
+            publish_values();
+            ESP_LOGW(TAG, "Raw value:\n %s", raw_.c_str());
+            ESP_LOGW(TAG, "END DEBUG--------------");
+          }
           values_.clear();
+          raw_.clear();
         } else {
           ESP_LOGW(TAG, "Throttling");
         }

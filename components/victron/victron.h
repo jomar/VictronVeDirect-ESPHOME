@@ -289,6 +289,7 @@ class VictronComponent : public uart::UARTDevice, public Component {
   bool verify_checksum_ = true;
   uint8_t checksum_ = 0;
   std::map<std::string, std::string> values_;
+  std::string raw_;
   std::string label_;
   std::string value_;
   uint32_t last_transmission_{0};
