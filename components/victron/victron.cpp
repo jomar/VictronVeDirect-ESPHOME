@@ -105,8 +105,9 @@ void VictronComponent::loop() {
     read_byte(&c);
     checksum_ = (checksum_ + c) & 255;
     if (state_ == 0) {
-      if (c == '\r' || c == '\n')
+      if (c == '\r' || c == '\n') {
         continue;
+      }
       label_.clear();
       value_.clear();
       state_ = 1;
@@ -117,10 +118,11 @@ void VictronComponent::loop() {
         state_ = 3;
         continue;
       }
-      if (c == '\t')
+      if (c == '\t') {
         state_ = 2;
-      else
+      } else {
         label_.push_back(c);
+      }
       continue;
     }
     if (state_ == 2) {
@@ -158,7 +160,7 @@ void VictronComponent::loop() {
   }
 }
 
-static const std::string charging_mode_text(int value) {
+static std::string charging_mode_text(int value) {
   switch (value) {
     case 0:
       return "Off";
@@ -195,7 +197,7 @@ static const std::string charging_mode_text(int value) {
   }
 }
 
-static const std::string error_code_text(int value) {
+static std::string error_code_text(int value) {
   switch (value) {
     case 0:
       return "No error";
@@ -242,7 +244,7 @@ static const std::string error_code_text(int value) {
   }
 }
 
-static const std::string warning_code_text(int value) {
+static std::string warning_code_text(int value) {
   switch (value) {
     case 0:
       return "No warning";
@@ -275,7 +277,7 @@ static const std::string warning_code_text(int value) {
   }
 }
 
-static const std::string tracking_mode_text(int value) {
+static std::string tracking_mode_text(int value) {
   switch (value) {
     case 0:
       return "Off";
@@ -288,7 +290,7 @@ static const std::string tracking_mode_text(int value) {
   }
 }
 
-static const std::string device_mode_text(int value) {
+static std::string device_mode_text(int value) {
   switch (value) {
     case 0:
       return "Off";
@@ -303,7 +305,7 @@ static const std::string device_mode_text(int value) {
   }
 }
 
-static const std::string dc_monitor_mode_text(int value) {
+static std::string dc_monitor_mode_text(int value) {
   switch (value) {
     case -9:
       return "Solar charger";
@@ -346,7 +348,7 @@ static const std::string dc_monitor_mode_text(int value) {
   }
 }
 
-static const std::string device_type_text(int value) {
+static std::string device_type_text(int value) {
   switch (value) {
     case 0x203:
       return "BMV-700";
@@ -623,7 +625,7 @@ static const std::string device_type_text(int value) {
   }
 }
 
-static const std::string off_reason_text(uint32_t mask) {
+static std::string off_reason_text(uint32_t mask) {
   bool first = true;
   std::string value_list = "";
 
