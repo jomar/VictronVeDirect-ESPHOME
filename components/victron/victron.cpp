@@ -404,12 +404,18 @@ static std::string device_type_text(int value) {
       return "SmartSolar MPPT 150|85";
     case 0xA053:
       return "SmartSolar MPPT 75|15";
+    case 0xA075:
+      return "SmartSolar MPPT 75|15 rev2";
     case 0xA054:
       return "SmartSolar MPPT 75|10";
+    case 0xA074:
+      return "SmartSolar MPPT 75|10 rev2";
     case 0xA055:
       return "SmartSolar MPPT 100|15";
     case 0xA056:
       return "SmartSolar MPPT 100|30";
+    case 0xA073:
+      return "SmartSolar MPPT 150|45 rev3";
     case 0xA057:
       return "SmartSolar MPPT 100|50";
     case 0xA058:
@@ -464,6 +470,8 @@ static std::string device_type_text(int value) {
       return "BlueSolar MPPT 150|60 rev2";
     case 0xA071:
       return "BlueSolar MPPT 150|70 rev2";
+    case 0xA07D:
+      return "BlueSolar MPPT 75|15 rev3";
     case 0xA102:
       return "SmartSolar MPPT VE.Can 150/70";
     case 0xA103:
@@ -575,6 +583,7 @@ static std::string device_type_text(int value) {
     case 0xA274:
       return "Phoenix Inverter 48V 1200VA 230V";
     case 0xA279:
+    case 0xA2F9:
       return "Phoenix Inverter 12V 1200VA 120V";
     case 0xA27A:
       return "Phoenix Inverter 24V 1200VA 120V";
@@ -598,6 +607,14 @@ static std::string device_type_text(int value) {
       return "Phoenix Inverter 24V 3000VA 230V";
     case 0xA2A4:
       return "Phoenix Inverter 48V 3000VA 230V";
+    case 0xA30A:
+      return "Blue Smart IP65 Charger 12|25";
+    case 0xA332:
+      return "Blue Smart IP22 Charger 24|8";
+    case 0xA334:
+      return "Blue Smart IP22 Charger 24|12";
+    case 0xA336:
+      return "Blue Smart IP22 Charger 24|16";
     case 0xA340:
       return "Phoenix Smart IP43 Charger 12|50 (1+1)";
     case 0xA341:
@@ -995,6 +1012,11 @@ void VictronComponent::handle_value_(const std::string& label, const std::string
 
   if (label == "SER#") {
     this->publish_state_once_(serial_number_text_sensor_, value);
+    return;
+  }
+
+  if (label_ == "HC#") {
+    this->publish_state_once_(hardware_revision_text_sensor_, value_);
     return;
   }
 

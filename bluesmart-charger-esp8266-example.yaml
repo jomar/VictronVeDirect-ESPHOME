@@ -1,5 +1,5 @@
 substitutions:
-  name: phoenix-inverter
+  name: bluesmart-charger
   external_components_source: github://KinDR007/VictronMPPT-ESPHOME@main
 
 esphome:
@@ -21,8 +21,6 @@ ota:
   platform: esphome
 
 logger:
-  baud_rate: 0
-  esp8266_store_log_strings_in_flash: false
 
 # If you use Home Assistant please remove this `mqtt` section and uncomment the `api` component!
 # The native API has many advantages over MQTT: https://esphome.io/components/api.html#advantages-over-mqtt
@@ -50,47 +48,26 @@ sensor:
   - platform: victron
     victron_id: victron0
     battery_voltage:
-      name: "${name} battery voltage"
+      name: "${name} output voltage"
     battery_current:
-      name: "${name} battery current"
+      name: "${name} current"
+    error_code:
+      name: "${name} error code"
     charging_mode_id:
-      name: "${name} charging mode id"
-    device_mode_id:
-      name: "${name} device mode id"
-    ac_out_voltage:
-      name: "${name} ac out voltage"
-    ac_out_current:
-      name: "${name} ac out current"
-    ac_out_apparent_power:
-      name: "${name} ac out apparent power"
-    warning_code:
-      name: "${name} warning code"
-    off_reason_bitmask:
-      name: "${name} off reason bitmask"
+      name: "${name} mode id"
 
 text_sensor:
   - platform: victron
     victron_id: victron0
-    alarm_reason:
-      name: "${name} alarm reason"
-    # TODO: "OR"
-    charging_mode:
-      name: "${name} charging mode"
-    firmware_version:
-      name: "${name} firmware version"
     device_type:
       name: "${name} device type"
+    firmware_version_24bit:
+      name: "${name} firmware version"
     serial_number:
       name: "${name} serial number"
-    device_mode:
-      name: "${name} device mode"
-    warning:
-      name: "${name} warning"
-    off_reason:
-      name: "${name} off reason"
-
-binary_sensor:
-  - platform: victron
-    victron_id: victron0
-    relay_state:
-      name: "${name} relay state"
+    hardware_revision:
+      name: "${name} hardware number"
+    error:
+      name: "${name} error"
+    charging_mode:
+      name: "${name} charging mode"

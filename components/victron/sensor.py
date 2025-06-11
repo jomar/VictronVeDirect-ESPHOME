@@ -1,17 +1,19 @@
 import esphome.codegen as cg
-import esphome.config_validation as cv
 from esphome.components import sensor
+import esphome.config_validation as cv
 from esphome.const import (
     CONF_BATTERY_VOLTAGE,
     DEVICE_CLASS_CURRENT,
+    DEVICE_CLASS_DURATION,
     DEVICE_CLASS_EMPTY,
-    DEVICE_CLASS_POWER,
     DEVICE_CLASS_ENERGY,
+    DEVICE_CLASS_POWER,
     DEVICE_CLASS_TEMPERATURE,
     DEVICE_CLASS_VOLTAGE,
     ICON_CURRENT_AC,
     ICON_EMPTY,
     ICON_FLASH,
+    ICON_GAUGE,
     ICON_PERCENT,
     ICON_POWER,
     ICON_TIMELAPSE,
@@ -86,7 +88,7 @@ CONF_AMOUNT_OF_CHARGED_ENERGY = "amount_of_charged_energy"
 CONF_DC_MONITOR_MODE_ID = "dc_monitor_mode_id"
 CONF_OFF_REASON_BITMASK = "off_reason_bitmask"
 
-UNIT_AMPERE_HOURS = "Ah"
+UNIT_AMPERE_HOUR = "Ah"
 
 SENSORS = [
     CONF_BATTERY_VOLTAGE,
@@ -163,21 +165,21 @@ CONFIG_SCHEMA = cv.Schema(
             unit_of_measurement=UNIT_WATT_HOURS,
             icon=ICON_POWER,
             accuracy_decimals=0,
-            device_class=DEVICE_CLASS_POWER,
+            device_class=DEVICE_CLASS_ENERGY,
             state_class=STATE_CLASS_TOTAL_INCREASING,
         ),
         cv.Optional(CONF_YIELD_YESTERDAY): sensor.sensor_schema(
             unit_of_measurement=UNIT_WATT_HOURS,
             icon=ICON_POWER,
             accuracy_decimals=0,
-            device_class=DEVICE_CLASS_POWER,
+            device_class=DEVICE_CLASS_ENERGY,
             state_class=STATE_CLASS_TOTAL_INCREASING,
         ),
         cv.Optional(CONF_YIELD_TODAY): sensor.sensor_schema(
             unit_of_measurement=UNIT_WATT_HOURS,
             icon=ICON_POWER,
             accuracy_decimals=0,
-            device_class=DEVICE_CLASS_POWER,
+            device_class=DEVICE_CLASS_ENERGY,
             state_class=STATE_CLASS_TOTAL_INCREASING,
         ),
         cv.Optional(CONF_PANEL_VOLTAGE): sensor.sensor_schema(
@@ -320,8 +322,8 @@ CONFIG_SCHEMA = cv.Schema(
             device_class=DEVICE_CLASS_POWER,
         ),
         cv.Optional(CONF_CONSUMED_AMP_HOURS): sensor.sensor_schema(
-            unit_of_measurement=UNIT_AMPERE_HOURS,
-            icon=ICON_EMPTY,
+            unit_of_measurement=UNIT_AMPERE_HOUR,
+            icon=ICON_GAUGE,
             accuracy_decimals=3,
             device_class=DEVICE_CLASS_EMPTY,
             state_class=STATE_CLASS_MEASUREMENT,
@@ -336,25 +338,26 @@ CONFIG_SCHEMA = cv.Schema(
             unit_of_measurement=UNIT_MINUTE,
             icon=ICON_TIMELAPSE,
             accuracy_decimals=0,
-            device_class=DEVICE_CLASS_EMPTY,
+            device_class=DEVICE_CLASS_DURATION,
+            state_class=STATE_CLASS_MEASUREMENT,
         ),
         cv.Optional(CONF_DEPTH_OF_THE_DEEPEST_DISCHARGE): sensor.sensor_schema(
-            unit_of_measurement=UNIT_AMPERE,
-            icon=ICON_CURRENT_AC,
+            unit_of_measurement=UNIT_AMPERE_HOUR,
+            icon=ICON_GAUGE,
             accuracy_decimals=3,
-            device_class=DEVICE_CLASS_CURRENT,
+            device_class=DEVICE_CLASS_EMPTY,
         ),
         cv.Optional(CONF_DEPTH_OF_THE_LAST_DISCHARGE): sensor.sensor_schema(
-            unit_of_measurement=UNIT_AMPERE,
-            icon=ICON_CURRENT_AC,
+            unit_of_measurement=UNIT_AMPERE_HOUR,
+            icon=ICON_GAUGE,
             accuracy_decimals=3,
-            device_class=DEVICE_CLASS_CURRENT,
+            device_class=DEVICE_CLASS_EMPTY,
         ),
         cv.Optional(CONF_DEPTH_OF_THE_AVERAGE_DISCHARGE): sensor.sensor_schema(
-            unit_of_measurement=UNIT_AMPERE,
-            icon=ICON_CURRENT_AC,
+            unit_of_measurement=UNIT_AMPERE_HOUR,
+            icon=ICON_GAUGE,
             accuracy_decimals=3,
-            device_class=DEVICE_CLASS_CURRENT,
+            device_class=DEVICE_CLASS_EMPTY,
         ),
         cv.Optional(CONF_NUMBER_OF_CHARGE_CYCLES): sensor.sensor_schema(
             unit_of_measurement=UNIT_EMPTY,
@@ -369,8 +372,8 @@ CONFIG_SCHEMA = cv.Schema(
             device_class=DEVICE_CLASS_EMPTY,
         ),
         cv.Optional(CONF_CUMULATIVE_AMP_HOURS_DRAWN): sensor.sensor_schema(
-            unit_of_measurement=UNIT_AMPERE_HOURS,
-            icon=ICON_EMPTY,
+            unit_of_measurement=UNIT_AMPERE_HOUR,
+            icon=ICON_GAUGE,
             accuracy_decimals=3,
             device_class=DEVICE_CLASS_EMPTY,
             state_class=STATE_CLASS_MEASUREMENT,
